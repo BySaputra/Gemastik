@@ -1,0 +1,125 @@
+    <!-- ═══════════════════════════════════════
+         BOTTOM SECTIONS (IQAir-style)
+    ════════════════════════════════════════ -->
+
+    <!-- RANKING KOTA TERPOLUSI + TERBERSIH -->
+    <div class="grid2">
+
+      <!-- Ranking Terpolusi -->
+      <div class="card">
+        <div class="rank-header">
+          <span class="section-label" style="margin:0">🏭 Wilayah Paling Terpolusi</span>
+          <span class="rank-time">Live · diperbarui tiap jam</span>
+        </div>
+        <div class="rank-list" id="rankPolluted"></div>
+      </div>
+
+      <!-- Ranking Terbersih -->
+      <div class="card">
+        <div class="rank-header">
+          <span class="section-label" style="margin:0">🌿 Wilayah Paling Bersih</span>
+          <span class="rank-time">Live · diperbarui tiap jam</span>
+        </div>
+        <div class="rank-list" id="rankClean"></div>
+      </div>
+
+    </div>
+
+    <!-- CUACA + KELEMBAPAN -->
+    <div class="grid3">
+
+      <div class="card weather-card">
+        <div class="weather-icon">🌡️</div>
+        <div class="weather-label">Suhu</div>
+        <div class="weather-val">32°C</div>
+        <div class="weather-sub">Terasa seperti 36°C</div>
+      </div>
+
+      <div class="card weather-card">
+        <div class="weather-icon">💧</div>
+        <div class="weather-label">Kelembapan</div>
+        <div class="weather-val">78%</div>
+        <div class="weather-sub">Tinggi — memperburuk polusi</div>
+      </div>
+
+      <div class="card weather-card">
+        <div class="weather-icon">💨</div>
+        <div class="weather-label">Kecepatan Angin</div>
+        <div class="weather-val">12 km/h</div>
+        <div class="weather-sub">Tenggara → Barat Laut</div>
+      </div>
+
+    </div>
+
+    <!-- DAMPAK KESEHATAN -->
+    <div class="card">
+      <div class="section-label">Dampak Kesehatan berdasarkan Level PM2.5</div>
+      <div class="health-grid" id="healthGrid"></div>
+    </div>
+
+    <!-- PERBANDINGAN KOTA ASIA TENGGARA -->
+    <div class="card">
+      <div class="rank-header" style="margin-bottom:16px">
+        <span class="section-label" style="margin:0">🌏 Perbandingan Kota Asia Tenggara</span>
+        <span class="rank-time">Hari ini · PM2.5 µg/m³</span>
+      </div>
+      <div class="city-compare-wrap">
+        <div class="city-compare-list" id="cityCompare"></div>
+      </div>
+    </div>
+
+    <!-- FAQ / INFO CARDS -->
+    <div class="grid3">
+      <div class="info-card" onclick="this.classList.toggle('open')">
+        <div class="info-card-q">❓ Kapan PM2.5 paling tinggi di Jakarta?</div>
+        <div class="info-card-a">PM2.5 biasanya mencapai puncak pada pagi hari (06.00–09.00) saat jam sibuk lalu lintas, dan sore hari (17.00–20.00). Musim kemarau (Juni–Oktober) umumnya lebih buruk karena kurangnya hujan untuk membersihkan udara.</div>
+      </div>
+      <div class="info-card" onclick="this.classList.toggle('open')">
+        <div class="info-card-q">😷 Masker apa yang efektif?</div>
+        <div class="info-card-a">Masker N95 atau KN95 dapat menyaring hingga 95% partikel PM2.5. Masker bedah biasa hanya mampu menyaring sekitar 30–60%. Pastikan masker terpasang rapat tanpa celah di sisi wajah.</div>
+      </div>
+      <div class="info-card" onclick="this.classList.toggle('open')">
+        <div class="info-card-q">🏠 Bagaimana menjaga udara dalam ruangan?</div>
+        <div class="info-card-a">Gunakan air purifier dengan filter HEPA, tutup jendela saat kualitas udara buruk, hindari memasak dengan cara dibakar, dan tambahkan tanaman hias seperti lidah mertua yang membantu menyerap polutan.</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo" style="margin-bottom:8px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--current);flex-shrink:0"></div>
+            PM2.5 Jakarta
+          </div>
+          <p class="footer-desc">Platform pemantauan kualitas udara real-time untuk warga Jakarta. Data diperbarui setiap jam dari 7 stasiun pemantauan resmi.</p>
+        </div>
+        <div class="footer-links-group">
+          <div class="footer-col">
+            <div class="footer-col-title">Data</div>
+            <a href="#">Stasiun Pemantauan</a>
+            <a href="#">Unduh Data CSV</a>
+            <a href="#">API Dokumentasi</a>
+            <a href="#">Laporan Bulanan</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Informasi</div>
+            <a href="#">Tentang PM2.5</a>
+            <a href="#">Standar WHO</a>
+            <a href="#">Panduan Kesehatan</a>
+            <a href="#">FAQ</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Lainnya</div>
+            <a href="#">Tentang Kami</a>
+            <a href="#">Hubungi Kami</a>
+            <a href="#">Kebijakan Privasi</a>
+            <a href="#">Syarat & Ketentuan</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 PM2.5 Jakarta. Data bersumber dari BMKG & KLHK.</span>
+        <span class="footer-who">Standar WHO: 15 µg/m³ (tahunan) · 25 µg/m³ (harian)</span>
+      </div>
+    </footer>

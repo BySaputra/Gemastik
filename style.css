@@ -1,0 +1,544 @@
+/* ═══════════════════════════════════════════════
+   PM2.5 Jakarta Dashboard — style.css
+   Tech Stack : Vanilla HTML/CSS
+   ═══════════════════════════════════════════════ */
+
+/* ── 1. DESIGN TOKENS ─────────────────────────── */
+:root {
+  /* Air Quality Colors */
+  --good:        #27AE60;
+  --good-light:  #E8F8EF;
+  --good-mid:    #82E0AA;
+  --mod:         #F39C12;
+  --mod-light:   #FEF5E4;
+  --mod-mid:     #FAD7A0;
+  --bad:         #E74C3C;
+  --bad-light:   #FDEDEC;
+  --bad-mid:     #F1948A;
+  --vbad:        #8E44AD;
+  --vbad-light:  #F5EEF8;
+
+  /* Current level (changes via JS) */
+  --current:     #E74C3C;
+  --current-mid: #F1948A;
+
+  /* Layout */
+  --bg:          #F0F2F5;
+  --card:        #FFFFFF;
+  --text:        #1A1D23;
+  --muted:       #6B7280;
+  --border:      #E5E7EB;
+  --radius:      14px;
+  --radius-sm:   8px;
+
+  /* Typography */
+  --font: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ── 2. DARK MODE TOKENS ──────────────────────── */
+body.dark {
+  --bg:    #111318;
+  --card:  #1C1F26;
+  --text:  #E8EAED;
+  --muted: #9CA3AF;
+  --border:#2A2D35;
+}
+
+/* ── 3. RESET & BASE ──────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ── 4. NAVBAR ────────────────────────────────── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background 0.3s;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.5px;
+}
+
+.logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--current);
+  transition: background 0.4s;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(231, 76, 60, 0); }
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.location-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dark-toggle {
+  width: 42px;
+  height: 24px;
+  background: var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  transition: background 0.2s;
+}
+.dark-toggle::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+body.dark .dark-toggle::after { transform: translateX(18px); }
+
+/* ── 5. ALERT BANNER ──────────────────────────── */
+.alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: #FEF2F2;
+  border-bottom: 1px solid #FECACA;
+  font-size: 13px;
+  font-weight: 500;
+  color: #991B1B;
+}
+.alert-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #EF4444;
+  flex-shrink: 0;
+  animation: blink 1.5s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+body.dark .alert-banner { background: #2D1B1B; border-color: #4A2020; color: #FCA5A5; }
+
+/* ── 6. MAIN LAYOUT ───────────────────────────── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: grid;
+  gap: 20px;
+}
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+/* ── 7. HERO CARD ─────────────────────────────── */
+.hero {
+  border-radius: var(--radius);
+  padding: 36px 36px 32px;
+  background: linear-gradient(135deg, var(--current) 0%, var(--current-mid) 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.4s;
+}
+
+.hero-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+.hero-circle-1 { width: 200px; height: 200px; right: -40px; top: -40px; }
+.hero-circle-2 { width: 140px; height: 140px; right: 40px;  bottom: -60px; }
+
+.hero-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  opacity: 0.75;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.hero-value-row { display: flex; align-items: baseline; gap: 6px; }
+
+.hero-value {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  transition: all 0.3s;
+}
+
+.hero-unit { font-size: 20px; font-weight: 400; opacity: 0.75; }
+
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 15px;
+  backdrop-filter: blur(4px);
+}
+.hero-status-dot { width: 9px; height: 9px; border-radius: 50%; background: white; }
+
+/* AQI Spectrum Bar */
+.aqi-bar-wrap { margin-top: 24px; max-width: 340px; }
+
+.aqi-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  opacity: 0.65;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.aqi-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #27AE60 0%, #F39C12 40%, #E74C3C 65%, #8E44AD 85%, #4A235A 100%);
+  position: relative;
+}
+
+.aqi-thumb {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--current);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.4s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.hero-meta {
+  margin-top: 20px;
+  font-size: 12px;
+  opacity: 0.65;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── 8. QUICK STATS ───────────────────────────── */
+.stat-row {
+  display: flex;
+  gap: 12px;
+}
+.stat-item {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  text-align: center;
+  transition: background 0.3s;
+}
+.stat-val {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+.stat-val.mod  { color: var(--mod); }
+.stat-val.bad  { color: var(--bad); }
+.stat-val.good { color: var(--good); }
+
+.stat-label {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── 9. SECTION LABEL ─────────────────────────── */
+.section-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ── 10. ACTION CARDS ─────────────────────────── */
+.action-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.3s;
+  cursor: default;
+}
+.action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.action-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.action-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.action-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ── 11. MAP CARD ─────────────────────────────── */
+.map-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.map-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.map-station-count { font-size: 11px; color: var(--muted); }
+
+#map { height: 300px; width: 100%; }
+
+.map-legend {
+  display: flex;
+  gap: 14px;
+  padding: 11px 18px;
+  background: var(--bg);
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+}
+.leg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── 12. CHART CARD ───────────────────────────── */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 20px;
+  border: 1px solid var(--border);
+  transition: background 0.3s;
+}
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.chart-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.chart-label-text { font-size: 11px; color: var(--muted); }
+.chart-who        { font-size: 11px; color: var(--muted); margin-left: auto; }
+
+.chart-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+.chart-badge.bad  { background: var(--bad-light);  color: var(--bad); }
+.chart-badge.good { background: var(--good-light); color: var(--good); }
+.chart-badge.mod  { background: var(--mod-light);  color: var(--mod); }
+
+.chart-wrap { position: relative; height: 160px; }
+
+.chart-peaks {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.peak-box {
+  flex: 1;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  text-align: center;
+}
+.bad-bg { background: var(--bad-light); }
+.mod-bg { background: var(--mod-light); }
+
+.peak-val   { font-size: 18px; font-weight: 700; }
+.peak-label { font-size: 10px; font-weight: 600; margin-top: 2px; }
+.peak-val.bad   { color: var(--bad); }
+.peak-val.mod   { color: var(--mod); }
+.peak-label.bad { color: var(--bad); }
+.peak-label.mod { color: var(--mod); }
+
+/* ── 13. TABS ─────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+.tab {
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--muted);
+  border: none;
+  background: none;
+  transition: all 0.15s;
+  font-family: var(--font);
+}
+.tab.active {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ── 14. EDUCATION ────────────────────────────── */
+.edu-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  transition: background 0.3s;
+}
+.edu-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.edu-chevron {
+  font-size: 14px;
+  color: var(--muted);
+  transition: transform 0.25s;
+}
+.edu-chevron.open { transform: rotate(180deg); }
+
+.edu-body {
+  padding: 0 20px 20px;
+  display: none;
+}
+.edu-body.open { display: block; }
+.edu-body p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.edu-scale { margin-top: 14px; }
+.edu-scale-bar {
+  display: flex;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 24px;
+}
+.edu-scale-bar > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: white;
+  font-weight: 600;
+}
+.edu-scale-nums {
+  display: flex;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.edu-scale-nums span { flex: 1; text-align: center; }
+
+/* ── 15. RESPONSIVE ───────────────────────────── */
+@media (max-width: 768px) {
+  .grid2, .grid3 { grid-template-columns: 1fr; }
+  .hero-value { font-size: 52px; }
+  .main { padding: 16px 14px; }
+  .navbar { padding: 12px 16px; }
+  .stat-row { flex-wrap: wrap; }
+  .stat-item { min-width: calc(50% - 6px); }
+}
+
+/* ── 16. LEAFLET POPUP OVERRIDES ──────────────── */
+.pm-popup .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  padding: 0;
+  border: 1px solid var(--border);
+}
+.pm-popup .leaflet-popup-content { margin: 14px 16px; }
+.leaflet-control-zoom { border: 1px solid var(--border) !important; border-radius: 8px !important; overflow: hidden; }
+.leaflet-control-zoom a { color: #374151 !important; font-weight: 500; }
